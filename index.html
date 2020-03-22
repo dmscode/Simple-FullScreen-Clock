@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple FullScrean Clock.</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <style>
+    @font-face {
+      font-family: 'number';
+      src:url('src/clock-number.ttf');
+    }
+    html,
+    body {
+      font-family: number;
+      width: 100vw;
+      height: 100vh;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    #clock {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      line-height: 100vh;
+      font-size: 16vw;
+      background-color: #080810;
+    }
+    #hour,
+    #minute,
+    #sep-hm {
+      font-size: 32vw;
+    }
+    #second,
+    #sep-ms {
+      font-size: 16vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"></div>
+  <script>
+    // 两位数字
+    const dbNum = function(num){ return num>9?num:'0'+num }
+    // 文字尺寸计算
+    const fontSize = function(){
+      const widthMax = window.innerWidth * 2 / 5
+      const heightMax = window.innerHeight
+      return widthMax > heightMax ? heightMax : widthMax
+    }
+    // 获取当前时间
+    const getNow = function(){
+      const now = new Date()
+      const hour   = dbNum( now.getHours() )
+      const minute = dbNum( now.getMinutes() )
+      const second = dbNum( now.getSeconds() )
+      const alpha = (Math.abs(30-Number(second))/100+0.6).toFixed(2)
+      const sepLetter = Number(second)%2 ? ':' : ' '
+      return `<span id="hour" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+hour+`</span>`
+        +`<span id="sep-hm" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+sepLetter+`</span>`
+        + `<span id="minute" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+minute+`</span>`
+        // + `<span id="minute">`+minute+`</span>`+`<span id="sep-ms">:</span>`
+        // + `<span id="second">`+second+`</span></span>`
+    }
+    const clock = document.getElementById('clock');
+    window.addEventListener('message', function(e) {
+      if(e.data === 'refresh') {
+        clock.innerHTML = getNow()
+      }
+    }, false);
+
+    const duration = 1; /* 1s */
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = 'data:text/html,%3C%21DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%09%3Cmeta%20charset%3D%22utf-8%22%20%2F%3E%0A%09%3Cmeta%20http-equiv%3D%22refresh%22%20content%3D%22'+ duration +'%22%20id%3D%22metarefresh%22%20%2F%3E%0A%09%3Ctitle%3Ex%3C%2Ftitle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%09%3Cscript%3Etop.postMessage%28%27refresh%27%2C%20%27%2A%27%29%3B%3C%2Fscript%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E';
+    document.body.insertBefore(iframe, document.body.childNodes[0]);
+  </script>
+</body>
+</html>

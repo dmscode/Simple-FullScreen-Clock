@@ -1,0 +1,7 @@
+{
+  "name": "Simple FullScreen Clock",
+  "short_name": "FullScreen Clock",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape"
+}
