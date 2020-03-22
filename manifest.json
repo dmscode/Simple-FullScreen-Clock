@@ -4,7 +4,7 @@
 	"name" : "Simple FullScrean Clock.",
 	"scope" : "/Simple-FullScreen-Clock/",
 	"display" : "fullscreen",
-	"start_url" : "https://dmscode.github.io/Simple-FullScreen-Clock/",
+	"start_url" : "https://dmscode.github.io/Simple-FullScreen-Clock/index.html",
 	"short_name" : "Simple FullScre",
 	"theme_color" : "transparent",
 	"description" : "A fullscreen clock for old phone & pad.",
