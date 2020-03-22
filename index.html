@@ -5,7 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple FullScrean Clock.</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes">
   <link rel='manifest' href='/manifest.json'>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+    const el = document.createElement('pwa-update');
+    document.body.appendChild(el);
+  </script>
   <style>
     @font-face {
       font-family: 'number';
