@@ -36,7 +36,6 @@
     #hour,
     #minute,
     #sep {
-      font-size: 32vw;
       transition: opacity 1s;
     }
   </style>
@@ -52,7 +51,7 @@
     const dbNum = function(num){ return num>9?num:'0'+num }
     // 文字尺寸计算
     const fontSize = function(){
-      const widthMax = window.innerWidth * 2 / 5
+      const widthMax = window.innerWidth * 19 / 50
       const heightMax = window.innerHeight
       return widthMax > heightMax ? heightMax : widthMax
     }
@@ -67,6 +66,7 @@
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
       document.querySelector('#sep').style.opacity = Number(second)%2
+      document.querySelectorAll('#clock > *').forEach(el=>el.style.fontSize = fontSize()+'px')
       document.querySelector('#clock').style.opacity = opacity
     }
     const clock = document.getElementById('clock');
