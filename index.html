@@ -8,17 +8,6 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel='manifest' href='./manifest.json'>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <script type="module">
-    window.addEventListener("load", function() {
-      console.log("Will the service worker register?");
-      navigator.serviceWorker.register('./sw.js')
-      .then(function(reg){
-          console.log("Yes, it did.");
-      }).catch(function(err) {
-          console.log("No it didn't. This happened: ", err)
-      });
-    });
-  </script>
   <style>
     @font-face {
       font-family: 'number';
@@ -32,6 +21,7 @@
       padding: 0;
       margin: 0;
       overflow: hidden;
+      background-color: #000000;
     }
     #clock {
       position: relative;
@@ -41,21 +31,22 @@
       text-align: center;
       line-height: 100vh;
       font-size: 16vw;
-      background-color: #080810;
+      transition: opacity 1s;
     }
     #hour,
     #minute,
-    #sep-hm {
+    #sep {
       font-size: 32vw;
-    }
-    #second,
-    #sep-ms {
-      font-size: 16vw;
+      transition: opacity 1s;
     }
   </style>
 </head>
 <body>
-  <div id="clock"></div>
+  <div id="clock">
+    <span id="hour"></span>
+    <span id="sep">:</span>
+    <span id="minute"></span>
+  </div>
   <script>
     // 两位数字
     const dbNum = function(num){ return num>9?num:'0'+num }
@@ -66,23 +57,22 @@
       return widthMax > heightMax ? heightMax : widthMax
     }
     // 获取当前时间
-    const getNow = function(){
+    const refreshTime = function(){
       const now = new Date()
       const hour   = dbNum( now.getHours() )
       const minute = dbNum( now.getMinutes() )
       const second = dbNum( now.getSeconds() )
-      const alpha = (Math.abs(30-Number(second))/100+0.6).toFixed(2)
-      const sepLetter = Number(second)%2 ? ':' : ' '
-      return `<span id="hour" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+hour+`</span>`
-        +`<span id="sep-hm" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+sepLetter+`</span>`
-        + `<span id="minute" style="color: rgba(255, 255, 255, `+alpha+`); font-size: `+ fontSize() +`px">`+minute+`</span>`
-        // + `<span id="minute">`+minute+`</span>`+`<span id="sep-ms">:</span>`
-        // + `<span id="second">`+second+`</span></span>`
+      const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + 0.5).toFixed(2)
+
+      document.querySelector('#hour').innerHTML = hour
+      document.querySelector('#minute').innerHTML = minute
+      document.querySelector('#sep').style.opacity = Number(second)%2
+      document.querySelector('#clock').style.opacity = opacity
     }
     const clock = document.getElementById('clock');
     window.addEventListener('message', function(e) {
       if(e.data === 'refresh') {
-        clock.innerHTML = getNow()
+        refreshTime()
       }
     }, false);
 
