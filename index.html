@@ -66,7 +66,9 @@
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
       document.querySelector('#sep').style.opacity = Number(second)%2
-      document.querySelectorAll('#clock > *').forEach(el=>el.style.fontSize = fontSize()+'px')
+      document.querySelector('#hour').style.fontSize = fontSize()+'px'
+      document.querySelector('#minute').style.fontSize = fontSize()+'px'
+      document.querySelector('#sep').style.fontSize = fontSize()+'px'
       document.querySelector('#clock').style.opacity = opacity
     }
     const clock = document.getElementById('clock');
