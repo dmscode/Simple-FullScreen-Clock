@@ -6,8 +6,8 @@
   <title>Simple FullScrean Clock.</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#080810">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#080810">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel='manifest' href='./manifest.json'>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <style>
@@ -70,7 +70,7 @@
       const minute = dbNum( now.getMinutes() )
       const second = dbNum( now.getSeconds() )
       if(window.location.hash === '#auto'){
-        if(Number(hour)<7 || Number>(19)){
+        if(Number(hour)<7 || Number(hour)>=19){
           if(isLight){
             isLight = !isLight
             setTheme()
@@ -93,8 +93,6 @@
       document.querySelector('#minute').style.fontSize = fontSize()+'px'
       document.querySelector('#sep').style.fontSize = fontSize()+'px'
       document.querySelector('#clock').style.opacity = opacity
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme_color)
-      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', theme_color)
     }
     const clock = document.getElementById('clock');
     window.addEventListener('message', function(e) {
