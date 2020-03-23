@@ -51,8 +51,6 @@
   <script>
     var isLight = window.location.hash==='#light' ? true : false
     const setTheme = function(){
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', isLight ? '#F3F3F6' : '#080810')
-      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', isLight ? '#F3F3F6' : '#080810')
       document.querySelector('#clock').style.backgroundColor = isLight ? 'white' : 'black'
       document.querySelector('#clock').style.color = isLight ? 'black' : 'white'
     }
@@ -85,6 +83,7 @@
         }
       }
       const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + (isLight ? 0.8 : 0.5)).toFixed(2)
+      const theme_color = isLight ? 'rgba(233,233,236,'+opacity+')' : 'rgba(8,8,10,'+opacity+')'
 
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
@@ -93,6 +92,8 @@
       document.querySelector('#minute').style.fontSize = fontSize()+'px'
       document.querySelector('#sep').style.fontSize = fontSize()+'px'
       document.querySelector('#clock').style.opacity = opacity
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme_color)
+      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', theme_color)
     }
     const clock = document.getElementById('clock');
     window.addEventListener('message', function(e) {
