@@ -6,6 +6,8 @@
   <title>Simple FullScrean Clock.</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#080810">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#080810">
   <link rel='manifest' href='./manifest.json'>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <style>
@@ -21,7 +23,7 @@
       padding: 0;
       margin: 0;
       overflow: hidden;
-      background-color: #000000;
+      background-color: black;
     }
     #clock {
       position: relative;
@@ -47,6 +49,14 @@
     <span id="minute"></span>
   </div>
   <script>
+    var isLight = window.location.hash==='#light' ? true : false
+    const setTheme = function(){
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', isLight ? '#F3F3F6' : '#080810')
+      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', isLight ? '#F3F3F6' : '#080810')
+      document.querySelector('#clock').style.backgroundColor = isLight ? 'white' : 'black'
+      document.querySelector('#clock').style.color = isLight ? 'black' : 'white'
+    }
+    window.addEventListener('load', setTheme, false)
     // 两位数字
     const dbNum = function(num){ return num>9?num:'0'+num }
     // 文字尺寸计算
@@ -61,7 +71,20 @@
       const hour   = dbNum( now.getHours() )
       const minute = dbNum( now.getMinutes() )
       const second = dbNum( now.getSeconds() )
-      const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + 0.5).toFixed(2)
+      if(window.location.hash === '#auto'){
+        if(Number(hour)<7 || Number>(19)){
+          if(isLight){
+            isLight = !isLight
+            setTheme()
+          }
+        }else{
+          if(!isLight){
+            isLight = !isLight
+            setTheme()
+          }
+        }
+      }
+      const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + (isLight ? 0.8 : 0.5)).toFixed(2)
 
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
