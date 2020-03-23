@@ -82,6 +82,7 @@
           }
         }
       }
+      if( hour==='03' && minute==='00' && second==='00' ){ window.location.reload(true) }
       const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + (isLight ? 0.8 : 0.5)).toFixed(2)
       const theme_color = isLight ? 'rgba(233,233,236,'+opacity+')' : 'rgba(8,8,10,'+opacity+')'
 
