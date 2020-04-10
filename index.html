@@ -51,16 +51,22 @@
     #minute::before {
       content: attr(data-content);
       position: absolute;
-      font-size: 0.3em;
-      line-height: 0.24em;
-      top: 0em;
       opacity: 0.6;
     }
     #hour::before {
+      width: 200%;
+      font-size: 0.2em;
+      line-height: 0.16em;
+      bottom: 90%;
       left: 0.2em;
+      text-align: left;
     }
     #minute::before {
+      font-size: 0.4em;
+      line-height: 0.32em;
+      bottom: 90%;
       right: 0.2em;
+      text-align: tight;
     }
   </style>
 </head>
@@ -101,6 +107,8 @@
     // 获取当前时间
     const refreshTime = function(){
       const now = new Date()
+      const month   = dbNum( now.getMonth()+1 )
+      const date   = dbNum( now.getDate() )
       const hour   = dbNum( now.getHours() )
       const minute = dbNum( now.getMinutes() )
       const second = dbNum( now.getSeconds() )
@@ -124,7 +132,7 @@
 
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
-      document.querySelector('#hour').dataset.content = showMore ? weekname : ''
+      document.querySelector('#hour').dataset.content = showMore ? weekname+' '+month+'/'+date : ''
       document.querySelector('#minute').dataset.content = showMore ? second : ''
       document.querySelector('#sep').style.opacity = Number(second)%2
       document.querySelector('#clock').style.opacity = opacity
