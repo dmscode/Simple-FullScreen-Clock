@@ -31,45 +31,81 @@
       height: 100vh;
       color: white;
       text-align: center;
-      line-height: 100vh;
-      font-size: 16vw;
       transition: opacity 1s;
+    }
+    #time {
+      width: 120vw;
+      margin-left: -10vw;
+      line-height: 0.8em;
     }
     #hour,
     #minute,
     #sep {
       transition: opacity 1s;
     }
+    #hour,
+    #minute {
+      position: relative;
+    }
+    #hour::before,
+    #minute::before {
+      content: attr(data-content);
+      position: absolute;
+      font-size: 0.3em;
+      line-height: 0.24em;
+      top: 0em;
+      opacity: 0.6;
+    }
+    #hour::before {
+      left: 0.2em;
+    }
+    #minute::before {
+      right: 0.2em;
+    }
   </style>
 </head>
 <body>
   <div id="clock">
-    <span id="hour"></span>
-    <span id="sep">:</span>
-    <span id="minute"></span>
+    <div id="time"><!--
+  --><span id="hour"></span><!--
+  --><span id="sep">:</span><!--
+  --><span id="minute"></span>
+    </div>
   </div>
   <script>
-    var isLight = window.location.hash==='#light' ? true : false
+    var isLight = /light/.test(window.location.hash)
+    const showMore = /more/.test(window.location.hash)
+
+    const weeknames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
     const setTheme = function(){
       document.querySelector('#clock').style.backgroundColor = isLight ? 'white' : 'black'
       document.querySelector('#clock').style.color = isLight ? 'black' : 'white'
     }
-    window.addEventListener('load', setTheme, false)
-    // 两位数字
-    const dbNum = function(num){ return num>9?num:'0'+num }
-    // 文字尺寸计算
-    const fontSize = function(){
+    const resize = function(){
       const widthMax = window.innerWidth * 19 / 50
       const heightMax = window.innerHeight
-      return widthMax > heightMax ? heightMax : widthMax
+      const fontSize = widthMax > heightMax ? heightMax : widthMax
+      const lineHeight = fontSize*4/5
+      const paddingTop = (heightMax-lineHeight)/2
+
+      document.querySelector('#clock').style.fontSize = fontSize+'px'
+      document.querySelector('#clock').style.lineHeight = lineHeight+'px'
+      document.querySelector('#clock').style.paddingTop = paddingTop+'px'
     }
+    window.addEventListener('load', setTheme, false)
+    window.addEventListener('load', resize, false)
+    window.addEventListener('resize', resize, false)
+    // 两位数字
+    const dbNum = function(num){ return num>9?num:'0'+num }
     // 获取当前时间
     const refreshTime = function(){
       const now = new Date()
       const hour   = dbNum( now.getHours() )
       const minute = dbNum( now.getMinutes() )
       const second = dbNum( now.getSeconds() )
-      if(window.location.hash === '#auto'){
+      const weekname= weeknames[now.getDay()]
+      if(/auto/.test(window.location.hash)){
         if(Number(hour)<7 || Number(hour)>=19){
           if(isLight){
             isLight = !isLight
@@ -83,15 +119,14 @@
         }
       }
       if( hour==='03' && minute==='00' && second==='00' ){ window.location.reload(true) }
-      const opacity = (Math.sin(Math.PI * Number(second%30)/15-1) * 0.2 + (isLight ? 0.8 : 0.5)).toFixed(2)
+      const opacity = (Math.sin(Math.PI * Number(second%20)/10-1) * 0.2 + (isLight ? 0.8 : 0.5)).toFixed(2)
       const theme_color = isLight ? 'rgba(233,233,236,'+opacity+')' : 'rgba(8,8,10,'+opacity+')'
 
       document.querySelector('#hour').innerHTML = hour
       document.querySelector('#minute').innerHTML = minute
+      document.querySelector('#hour').dataset.content = showMore ? weekname : ''
+      document.querySelector('#minute').dataset.content = showMore ? second : ''
       document.querySelector('#sep').style.opacity = Number(second)%2
-      document.querySelector('#hour').style.fontSize = fontSize()+'px'
-      document.querySelector('#minute').style.fontSize = fontSize()+'px'
-      document.querySelector('#sep').style.fontSize = fontSize()+'px'
       document.querySelector('#clock').style.opacity = opacity
     }
     const clock = document.getElementById('clock');
