@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "stylus": "^0.54.7"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "bd": "parcel build ./src/index.html",
+    "build": "parcel build ./src/index.html --public-url ./"
+  }
+}

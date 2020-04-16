@@ -1,0 +1,54 @@
+@font-face 
+  font-family: 'number'
+  src:url('./src/clock-number.ttf')
+
+html,
+body
+  font-family: number
+  width: 100vw
+  height: 100vh
+  padding: 0
+  margin: 0
+  overflow: hidden
+  background-color black
+  #main
+    #clock
+      width: 100vw
+      height: 100vh
+      text-align: center
+      #time
+        width: 120vw
+        margin-left: -10vw
+
+    &.normal-screen
+      transition: opacity 1s
+      #clock
+        #time
+          .sep
+            transition: opacity 1s
+    &.more
+      #clock
+        .time-num
+          position: relative
+          &::before
+            content: attr(data-content)
+            position: absolute
+            opacity: 0.6
+            bottom: 95%
+        #hour::before
+          width: 200%
+          font-size: 0.2em
+          line-height: 0.16em
+          left: 0.1em
+          text-align: left
+        #minute::before
+          font-size: 0.4em
+          line-height: 0.32em
+          right: 0.1em
+          text-align: right
+    &.dark
+      background-color: black
+      color: white
+    &.light
+      background-color: white
+      color: black
