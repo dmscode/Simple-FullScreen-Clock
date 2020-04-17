@@ -7,7 +7,7 @@ import React from "react";
  * @param {*} props
  * @returns
  */
-export default function (props) {
+export default function ClockNum(props) {
   return (
     <span id={props.id} className="time-num" data-content={props.dataContent}>
       {props.num}

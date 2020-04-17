@@ -20,7 +20,7 @@ const timeString = numString=>{
  * @param {*} props
  * @returns
  */
-export default function (props) {
+export default function ClockTime(props) {
   return (
     <div id="time">
       <ClockNum

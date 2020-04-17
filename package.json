@@ -9,8 +9,7 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "parcel ./src/index.html",
-    "bd": "parcel build ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url ./"
+    "start": "parcel ./src/index.html --open",
+    "build": "parcel build ./src/index.html --public-url ./ --no-source-maps"
   }
 }
