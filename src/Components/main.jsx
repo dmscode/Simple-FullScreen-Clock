@@ -32,6 +32,9 @@ export default class Main extends React.Component {
     window.addEventListener('message', (e)=>{
       if(e.data === 'refresh') {
         this.setState(Object.assign( this.state, {time: this.getTime()}))
+        if(this.state.time.hour==='03' && this.state.time.minute==='00' && this.state.time.second==='00'){
+          window.location.reload(true)
+        }
       }
     }, false);
   }
