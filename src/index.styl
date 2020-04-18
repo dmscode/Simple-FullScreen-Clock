@@ -1,54 +1,97 @@
 @font-face 
-  font-family: 'number'
+  font-family 'number'
   src:url('./src/clock-number.ttf')
 
 html,
 body
-  font-family: number
-  width: 100vw
-  height: 100vh
-  padding: 0
-  margin: 0
-  overflow: hidden
+  font-family number
+  width 100vw
+  height 100vh
+  padding 0
+  margin 0
+  overflow hidden
   background-color black
   #main
+    position relative
+    #menu
+      height 0
+      width 100vw
+      overflow hidden
+      position absolute
+      top 0
+      left 0
+      z-index 1
+      text-align center
+      .menu-item
+        width 6em
+        max-width 90%
+        margin 0 auto
+        border-bottom 1px solid #333
+        color #CCC
+        cursor pointer
+      .menu-title
+        width 8em
+        border-bottom 2px solid #888
+        color white
+        cursor default
+      .menu-coffee
+        width 100%
+        max-width 100%
+        border-bottom none
     #clock
-      width: 100vw
-      height: 100vh
-      text-align: center
+      width 100vw
+      height 100vh
+      text-align center
       #time
-        width: 120vw
-        margin-left: -10vw
+        width 120vw
+        margin-left -10vw
 
     &.normal-screen
-      transition: opacity 1s
+      transition opacity 1s
+      #menu
+        transition height 0.5s
+        .menu-title
+          transition padding-top 0.5s
       #clock
         #time
           .sep
-            transition: opacity 1s
+            transition opacity 1s
     &.more
       #clock
         .time-num
-          position: relative
+          position relative
           &::before
-            content: attr(data-content)
-            position: absolute
-            opacity: 0.6
-            bottom: 95%
+            content attr(data-content)
+            position absolute
+            opacity 0.6
+            bottom 95%
         #hour::before
-          width: 200%
-          font-size: 0.2em
-          line-height: 0.16em
-          left: 0.1em
-          text-align: left
+          width 200%
+          font-size 0.2em
+          line-height 0.16em
+          left 0.1em
+          text-align left
         #minute::before
-          font-size: 0.4em
-          line-height: 0.32em
-          right: 0.1em
-          text-align: right
+          font-size 0.4em
+          line-height 0.32em
+          right 0.1em
+          text-align right
     &.dark
-      background-color: black
-      color: white
+      background-color black
+      color white
+      #menu
+        background-color black
+        color white
     &.light
-      background-color: white
-      color: black
+      background-color white
+      color black
+      #menu
+        background-color white
+        color black
+        .menu-item
+          border-bottom 1px solid #DDD
+          color #888
+        .menu-title
+          width 8em
+          border-bottom 2px solid #CCC
+          color #333

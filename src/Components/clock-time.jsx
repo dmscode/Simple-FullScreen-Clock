@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import ClockNum from "./clock-num";
 
@@ -20,18 +20,23 @@ const timeString = numString=>{
  * @param {*} props
  * @returns
  */
+
 export default function ClockTime(props) {
+  const hour = useMemo(()=>(<ClockNum
+    id="hour"
+    num={timeString(props.time.hour)}
+    dataContent={props.time ? weekNames[props.time.day] : ''} />)
+    , [props.time.hour, props.time.day])
+  const minute = useMemo(()=>(<ClockNum
+    id="minute"
+    num={timeString(props.time.minute)}
+    dataContent={timeString(props.time.second)} />)
+    , [props.time.minute, props.time.second])
   return (
     <div id="time">
-      <ClockNum
-        id="hour"
-        num={timeString(props.time.hour)}
-        dataContent={props.time ? weekNames[props.time.day] : ''} />
+      {hour}
       <span className="sep" style={{opacity: props.time.second%2 ? 0 : 100}}>:</span>
-      <ClockNum
-        id="minute"
-        num={timeString(props.time.minute)}
-        dataContent={timeString(props.time.second)} />
+      {minute}
     </div>
   )
 }

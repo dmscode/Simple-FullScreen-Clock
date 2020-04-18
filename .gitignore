@@ -2,3 +2,4 @@ node_modules
 /.cache
 /backup
 /发布分支
+/dist
